@@ -65,12 +65,17 @@ Or directly via scripts.inference (change test.yaml with your audio and video):
 !python -m scripts.inference --inference_config configs/inference/test.yaml --result_dir results/test --unet_model_path models/musetalkV15/unet.pth --unet_config models/musetalkV15/musetalk.json --version v15 --ffmpeg_path ffmpeg-master-latest-win64-gpl-shared/bin
 ```
 
-Or (recommended for production) launch via Docker:
+Or (recommended for production) launch via Docker (after downloading files, (mounting volume to container as mentioned below)):
 ```bash
-docker build -t musetalk-api .
-docker run -p 8000:8000 musetalk-api
+docker build -t musetalk .
+
+docker run \                                      
+  -v $(pwd)/models:/app/MuseTalk/models \
+  -v $(pwd)/results:/app/MuseTalk/results \
+  -v $(pwd)/data:/app/MuseTalk/data \
+  -v $(pwd)/configs:/app/MuseTalk/configs \
+  musetalk
 ```
-_(Ensure Dockerfile points to the right service entrypoint.)_
 
 **Step 4. API Usage**  
 Access the API at `http://localhost:8000` and POST your inference jobs.

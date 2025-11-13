@@ -24,9 +24,10 @@ RUN pip3 install --no-cache-dir \
     torchaudio==2.0.2
 
 # Clone MuseTalk
-RUN git clone https://github.com/TMElyralab/MuseTalk.git /app/MuseTalk
+# RUN git clone https://github.com/TMElyralab/MuseTalk.git /app/MuseTalk
+RUN git clone https://github.com/rafipatel/MuseTalk.git /app/MuseTalk
 
-WORKDIR /app/MuseTalk
+WORKDIR /app
 
 # Install requirements
 RUN pip3 install --no-cache-dir -r requirements.txt || true
@@ -44,10 +45,13 @@ RUN pip3 install --no-cache-dir -U openmim && \
 #     snapshot_download(repo_id='TMElyralab/MuseTalk', local_dir='./models', allow_patterns=['models/musetalkV15/*'])" || true
 
 # Download additional model files
+
+
 # RUN mkdir -p models/face-parse-bisent && \
 #     pip3 install gdown && \
 #     gdown --id 154JgKpzCPW82qINcVieuPH3fZ2e0P812 -O models/face-parse-bisent/79999_iter.pth && \
 #     curl -L https://download.pytorch.org/models/resnet18-5c106cde.pth -o models/face-parse-bisent/resnet18-5c106cde.pth
+
 
 # Set working directory
 WORKDIR /app/MuseTalk
@@ -63,11 +67,12 @@ WORKDIR /app/MuseTalk
 #   --ffmpeg_path ${FFMPEG_PATH:-/usr/bin/ffmpeg}' > /app/run_inference.sh && \
 # chmod +x /app/run_inference.sh
 
-RUN chmod +x /app/MuseTalk/download_weights.sh
-RUN  /app/MuseTalk/download_weights.sh
+# RUN chmod +x /app/MuseTalk/download_weights.sh
+# RUN  /app/MuseTalk/download_weights.sh
 
-COPY inference.sh /app/MuseTalk/inference.sh
+# COPY inference.sh /app/MuseTalk/inference.sh
 
-RUN chmod +x /app/MuseTalk/inference.sh
-CMD ["/app/MuseTalk/inference.sh", "v1.5","normal"]
+# RUN chmod +x /app/MuseTalk/inference.sh
+# CMD ["/app/MuseTalk/inference.sh", "v1.5","normal"]
+CMD ["uvicorn", "fastapi_service:app","--host", "0.0.0.0" ,"--port", "8000"]
 # CMD ["/app/run_inference.sh"]
