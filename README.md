@@ -43,7 +43,7 @@ git clone --recurse-submodules https://github.com/rafipatel/MuseTalk.git
 ```
 
 
-**Step 2. Follow all the installation steps mentioned in [Installations](#installation) untill [donwload weight section](#setup-ffmpeg)**
+**Step 2. If not using Docker, follow all the installation steps mentioned in [Installations](#installation) untill [download weight section](#setup-ffmpeg)**
 
 **Step 3. Download Models and Weights using new script in the fork (as download_weights.sh throws huggingface-cli error)**  
 Enter the musetalk service folder and run setup:

@@ -27,10 +27,11 @@ RUN pip3 install --no-cache-dir \
 # RUN git clone https://github.com/TMElyralab/MuseTalk.git /app/MuseTalk
 RUN git clone https://github.com/rafipatel/MuseTalk.git /app/MuseTalk
 
-WORKDIR /app
+WORKDIR /app/MuseTalk
 
 # Install requirements
-RUN pip3 install --no-cache-dir -r requirements.txt || true
+RUN pip3 install --no-cache-dir -r requirements.txt
+# RUN pip3 install -r requirements.txt || true
 
 # Install OpenMMLab packages (CPU version)
 RUN pip3 install --no-cache-dir -U openmim && \
@@ -53,8 +54,8 @@ RUN pip3 install --no-cache-dir -U openmim && \
 #     curl -L https://download.pytorch.org/models/resnet18-5c106cde.pth -o models/face-parse-bisent/resnet18-5c106cde.pth
 
 
-# Set working directory
-WORKDIR /app/MuseTalk
+# # Set working directory
+# WORKDIR /app/MuseTalk
 
 # Create entrypoint script
 # RUN echo '#!/bin/bash\n\
@@ -74,5 +75,6 @@ WORKDIR /app/MuseTalk
 
 # RUN chmod +x /app/MuseTalk/inference.sh
 # CMD ["/app/MuseTalk/inference.sh", "v1.5","normal"]
-CMD ["uvicorn", "fastapi_service:app","--host", "0.0.0.0" ,"--port", "8000"]
+# CMD ["uvicorn", "fastapi_service:app","--host", "0.0.0.0" ,"--port", "8000"]
+CMD ["python3", "-m", "uvicorn", "fastapi_service:app", "--host", "0.0.0.0" ,"--port", "8000"]
 # CMD ["/app/run_inference.sh"]
