@@ -1,6 +1,7 @@
 import os
 import sys
 import importlib
+import subprocess
 
 # List any packages needed for downloading
 REQUIRED_PACKAGES = [
