@@ -1,9 +1,6 @@
 import os
-from huggingface_hub import hf_hub_download
-import sys
-import subprocess
-import importlib
 
+# List any packages needed for downloading
 REQUIRED_PACKAGES = [
     "huggingface_hub",
     "gdown",
@@ -12,12 +9,19 @@ REQUIRED_PACKAGES = [
 
 PYTHON_EXEC = sys.executable
 
+# Install missing packages BEFORE importing
 for pkg in REQUIRED_PACKAGES:
     try:
         importlib.import_module(pkg.replace("-", "_"))
     except ImportError:
         print(f"Installing {pkg} ...")
         subprocess.run([PYTHON_EXEC, "-m", "pip", "install", pkg])
+
+
+from huggingface_hub import hf_hub_download
+import sys
+import subprocess
+import importlib
 
 # --- Configuration ---
 CHECKPOINTS_DIR = "models"
