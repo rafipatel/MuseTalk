@@ -1,4 +1,5 @@
 import os
+import sys
 
 # List any packages needed for downloading
 REQUIRED_PACKAGES = [
