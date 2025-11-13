@@ -1,5 +1,23 @@
 import os
 from huggingface_hub import hf_hub_download
+import sys
+import subprocess
+import importlib
+
+REQUIRED_PACKAGES = [
+    "huggingface_hub",
+    "gdown",
+    "requests"
+]
+
+PYTHON_EXEC = sys.executable
+
+for pkg in REQUIRED_PACKAGES:
+    try:
+        importlib.import_module(pkg.replace("-", "_"))
+    except ImportError:
+        print(f"Installing {pkg} ...")
+        subprocess.run([PYTHON_EXEC, "-m", "pip", "install", pkg])
 
 # --- Configuration ---
 CHECKPOINTS_DIR = "models"

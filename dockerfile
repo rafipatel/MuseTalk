@@ -62,6 +62,8 @@ WORKDIR /app/MuseTalk
 #   --version ${VERSION:-v15} \\\n\
 #   --ffmpeg_path ${FFMPEG_PATH:-/usr/bin/ffmpeg}' > /app/run_inference.sh && \
 # chmod +x /app/run_inference.sh
+
+RUN chmod +x /app/MuseTalk/download_weights.sh
 RUN  /app/MuseTalk/download_weights.sh
 
 COPY inference.sh /app/MuseTalk/inference.sh
