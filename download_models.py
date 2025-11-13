@@ -155,6 +155,9 @@ gdown.download(
     quiet=False
 )
 
+
+
+
 # Download resnet18 model
 import requests
 url = "https://download.pytorch.org/models/resnet18-5c106cde.pth"
@@ -165,4 +168,21 @@ with open(output_path, "wb") as f:
         f.write(chunk)
 print(f"✅ Downloaded {url} to {output_path}")
 
+
+
+s3fd_url = "https://www.adrianbulat.com/downloads/python-fan/s3fd-619a316812.pth"
+s3fd_dest_dir = os.path.expanduser("~/.cache/torch/hub/checkpoints")
+os.makedirs(s3fd_dest_dir, exist_ok=True)
+s3fd_dest_path = os.path.join(s3fd_dest_dir, "s3fd-619a316812.pth")
+
+if not os.path.exists(s3fd_dest_path) or os.path.getsize(s3fd_dest_path) < 85_000_000:  # ~85MB expected
+    print(f"Downloading S3FD weights from {s3fd_url} ...")
+    response = requests.get(s3fd_url, stream=True)
+    with open(s3fd_dest_path, "wb") as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
+    print(f"✅ Downloaded S3FD model to {s3fd_dest_path}")
+else:
+    print(f"✅ S3FD weights already present: {s3fd_dest_path}")
+    
 print("--- All model downloads complete. ---")

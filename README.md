@@ -50,7 +50,7 @@ Enter the musetalk service folder and run setup:
 ```bash
 cd MuseTalk
 python download_models.py
-```
+``` 
 - This will:
     - Install any missing Python dependencies
     - Download all required weights/checkpoints into `/models/`
@@ -69,7 +69,8 @@ Or (recommended for production) launch via Docker (after downloading files, (mou
 ```bash
 docker build -t musetalk .
 
-docker run \                                      
+docker run \ 
+  -p 8000:8000 \                                     
   -v $(pwd)/models:/app/MuseTalk/models \
   -v $(pwd)/results:/app/MuseTalk/results \
   -v $(pwd)/data:/app/MuseTalk/data \
